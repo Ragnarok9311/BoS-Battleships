@@ -1,29 +1,29 @@
 package battleships.display;
 
-import jserver.BoardClickEvent;
-import jserver.BoardClickListener;
-import jserver.XSend;
-import jserver.XSendAdapter;
+import jserver.*;
 import plotter.Graphic;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class Display {
 
-    private final XSendAdapter adapter; //Eigenschaft Adapter, Instanzvariablen, Objektvariablen
+    // Instanzvariablen, Objektvariablen (Eigenschaften)
+    private final XSendAdapter adapter;
 
+    // Konstruktor
     public Display() {
         this.adapter = new XSendAdapter();
-        adapter.board.addClickListener(new EventHandler());
-        //adapter.farbe2(2, 2, XSend.DARKRED);
-        Graphic graphic = adapter.board.getGraphic();
-        graphic.setTitle("Battleships");
-        graphic.setLocationRelativeTo(null); //null = Literal
 
+        Board board = this.adapter.getBoard();
+        board.addClickListener(new EventHandler());
+
+        Graphic graphic = board.getGraphic();
+        graphic.setTitle("Battleships");
+        graphic.setLocationRelativeTo(null); // null = Literal
     }
 
+    // Innere Klasse
     private class EventHandler implements BoardClickListener, ActionListener {
 
         @Override
