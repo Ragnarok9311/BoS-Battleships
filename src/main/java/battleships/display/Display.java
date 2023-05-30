@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class Display {
 
-    // Instanzvariablen, Objektvariablen (Eigenschaften)
+    // Instanzvariablen, Objektvariablen (Eigenschaften eines Objekts)
     private final XSendAdapter adapter;
 
     // Konstruktor
