@@ -1,10 +1,10 @@
 package battleships;
 
-import battleships.display.Display;
+import battleships.core.Game;
 
 public class Main {
 
     public static void main(String[] args) {
-        new Display();
+        new Game();
     }
 }

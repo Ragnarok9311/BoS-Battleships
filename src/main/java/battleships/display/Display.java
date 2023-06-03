@@ -12,8 +12,8 @@ public class Display {
     private final XSendAdapter adapter;
 
     // Konstruktor
-    public Display() {
-        this.adapter = new XSendAdapter();
+    public Display(XSendAdapter adapter) {
+        this.adapter = adapter;
 
         Board board = this.adapter.getBoard();
         board.addClickListener(new EventHandler());
