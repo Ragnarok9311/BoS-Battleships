@@ -1,33 +1,28 @@
 package battleships.core;
 
+import battleships.config.Config;
 import battleships.display.Display;
 import battleships.ships.Battleship;
 import battleships.ships.Ship;
-import battleships.util.Position;
-import jserver.XSend;
 import jserver.XSendAdapter;
 
 public class Game {
 
-    private final XSendAdapter adapter;
-    private Ship ship;
+    private final Ship[] ships;
 
     public Game() {
-        this.adapter = new XSendAdapter();
-        new Display(this.adapter);
+        this.ships = new Ship[Config.NUMBER_OF_SHIPS];
+        this.initShips();
+        new Display(this, new XSendAdapter());
     }
 
-    public void start() {
-        for (int i = 0; i < 5; i++) {
-            this.ship = new Battleship(); // Konstantenzugriff nur über Klassennamen
-            this.setShips();
+    private void initShips() {
+        for (int i = 0; i < this.ships.length; i++) {
+            this.ships[i] = new Battleship(); // Konstantenzugriff nur über Klassennamen
         }
     }
 
-    private void setShips() {
-        Position[] positions = ship.getPositions();
-        for (int i = 0; i < this.ship.getLength(); i++) {
-            this.adapter.farbe2(positions[i].getX(), positions[i].getY(), XSend.BLACK);
-        }
+    public Ship[] getShips() {
+        return ships;
     }
 }

@@ -1,24 +1,24 @@
 package battleships.display;
 
-import battleships.config.Config;
+import battleships.core.Game;
 import jserver.*;
 import plotter.Graphic;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Display {
 
     // Instanzvariablen, Objektvariablen (Eigenschaften eines Objekts)
-    private final XSendAdapter adapter;
+    private final BoardPainter boardPainter;
+    private final Game game;
 
     // Konstruktor
-    public Display(XSendAdapter adapter) {
-        this.adapter = adapter;
-        this.adapter.groesse(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
+    public Display(Game game, XSendAdapter adapter) {
+        this.game = game;
+        this.boardPainter = new BoardPainter(game, adapter);
 
-        Board board = this.adapter.getBoard();
+        Board board = adapter.getBoard();
         board.setSize(1200, 600);
         board.addClickListener(new EventHandler());
 
@@ -32,7 +32,7 @@ public class Display {
 
         @Override
         public void boardClick(BoardClickEvent event) {
-            adapter.farbe2(event.getX(), event.getY(), XSend.DARKRED);
+            boardPainter.draw(game, event);
         }
 
         @Override
