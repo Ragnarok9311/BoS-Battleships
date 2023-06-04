@@ -15,7 +15,9 @@ public class Game {
     public Game() {
         this.adapter = new XSendAdapter();
         new Display(this.adapter);
+    }
 
+    public void start() {
         for (int i = 0; i < 5; i++) {
             this.ship = new Battleship(); // Konstantenzugriff nur über Klassennamen
             this.setShips();
@@ -23,26 +25,9 @@ public class Game {
     }
 
     private void setShips() {
-        Position startPos = this.ship.getStartPos();
-        int startX = startPos.getX();
-        int startY = startPos.getY();
-
-        if (this.ship.isHorizontal()) {
-            for (int i = 0; i < this.ship.getLength(); i++) {
-                this.adapter.farbe2(
-                    startX++,
-                    startY,
-                    XSend.GRAY
-                );
-            }
-        } else {
-            for (int i = 0; i < this.ship.getLength(); i++) {
-                this.adapter.farbe2(
-                    startX,
-                    startY++,
-                    XSend.GRAY
-                );
-            }
+        Position[] positions = ship.getPositions();
+        for (int i = 0; i < this.ship.getLength(); i++) {
+            this.adapter.farbe2(positions[i].getX(), positions[i].getY(), XSend.BLACK);
         }
     }
 }

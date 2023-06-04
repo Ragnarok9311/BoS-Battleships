@@ -6,45 +6,51 @@ import battleships.util.Position;
 
 public abstract class Ship {
 
-    protected final Position startPos;
     protected final int length;
     protected final boolean isHorizontal;
+    protected Position[] positions;
 
     public Ship(int length) {
         this.length = length;
         this.isHorizontal = Maths.getRandomBoolean();
-        this.startPos = this.getRandomStartPosition();
+        this.positions = new Position[length];
+        this.positions[0] = this.getRandomStartPosition();
+        this.setPositions();
     }
-
-    private Position getRandomStartPosition() {
-        if (this.isHorizontal) {
-            return this.getRandomHorizontalStartPosition();
-        } else {
-            return this.getRandomVerticalStartPosition();
+    public void setPositions() {
+        int x = positions[0].getX();
+        int y = positions[0].getY();
+        if (this.isHorizontal){
+            for (int i = 1; i < this.positions.length; i++){
+                positions[i] = new Position(++x, y);
+            }
+        }
+        else {
+            for (int i = 1; i < this.positions.length; i++){
+                positions[i] = new Position(x, ++y);
+            }
         }
     }
 
-    private Position getRandomHorizontalStartPosition() {
-        int x = Maths.getRandomNumberBetween(0, this.length);
-        int y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - 1);
-        return new Position(x, y);
-    }
+    private Position getRandomStartPosition() {
+        int x = 0;
+        int y = 0;
 
-    private Position getRandomVerticalStartPosition() {
-        int x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH - 1);
-        int y = Maths.getRandomNumberBetween(0, this.length);
+        if (this.isHorizontal) {
+            x = Maths.getRandomNumberBetween(0, this.length);
+            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - 1);
+        } else {
+            x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH - 1);
+            y = Maths.getRandomNumberBetween(0, this.length);
+        }
         return new Position(x, y);
-    }
-
-    public Position getStartPos() {
-        return startPos;
     }
 
     public int getLength() {
         return length;
     }
 
-    public boolean isHorizontal() {
-        return isHorizontal;
+    public Position[] getPositions() {
+        return positions;
     }
 }
