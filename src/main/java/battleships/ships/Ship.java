@@ -1,24 +1,23 @@
 package battleships.ships;
 
 import battleships.config.Config;
-import battleships.util.Direction;
 import battleships.util.Maths;
 import battleships.util.Position;
 
-public class Ship {
+public abstract class Ship {
 
     protected final Position startPos;
     protected final int length;
-    protected final Direction direction;
+    protected final boolean isHorizontal;
 
-    public Ship(int length, Direction direction) {
+    public Ship(int length) {
         this.length = length;
-        this.direction = direction;
+        this.isHorizontal = Maths.getRandomBoolean();
         this.startPos = this.getRandomStartPosition();
     }
 
     private Position getRandomStartPosition() {
-        if (this.direction == Direction.HORIZONTAL) {
+        if (this.isHorizontal) {
             return this.getRandomHorizontalStartPosition();
         } else {
             return this.getRandomVerticalStartPosition();
@@ -45,7 +44,7 @@ public class Ship {
         return length;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public boolean isHorizontal() {
+        return isHorizontal;
     }
 }

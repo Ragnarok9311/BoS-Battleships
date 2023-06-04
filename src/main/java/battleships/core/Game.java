@@ -3,8 +3,7 @@ package battleships.core;
 import battleships.display.Display;
 import battleships.ships.Battleship;
 import battleships.ships.Ship;
-import battleships.util.Direction;
-import battleships.util.Maths;
+import battleships.util.Position;
 import jserver.XSend;
 import jserver.XSendAdapter;
 
@@ -17,21 +16,18 @@ public class Game {
         this.adapter = new XSendAdapter();
         new Display(this.adapter);
 
-        for (int i = 0; i < 20; i++) {
-            this.ship = new Battleship(this.getRanmdomDirection()); // Konstantenzugriff nur über Klassennamen
+        for (int i = 0; i < 5; i++) {
+            this.ship = new Battleship(); // Konstantenzugriff nur über Klassennamen
             this.setShips();
         }
     }
 
-    private Direction getRanmdomDirection() {
-        return Maths.getRandomNumberBetween(0, 1) == 0 ? Direction.HORIZONTAL : Direction.VERTICAL;
-    }
-
     private void setShips() {
-        int startX = this.ship.getStartPos().getX();
-        int startY = this.ship.getStartPos().getY();
+        Position startPos = this.ship.getStartPos();
+        int startX = startPos.getX();
+        int startY = startPos.getY();
 
-        if (this.ship.getDirection() == Direction.HORIZONTAL) {
+        if (this.ship.isHorizontal()) {
             for (int i = 0; i < this.ship.getLength(); i++) {
                 this.adapter.farbe2(
                     startX++,

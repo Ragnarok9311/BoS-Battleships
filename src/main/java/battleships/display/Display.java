@@ -1,5 +1,6 @@
 package battleships.display;
 
+import battleships.config.Config;
 import jserver.*;
 import plotter.Graphic;
 
@@ -14,6 +15,7 @@ public class Display {
     // Konstruktor
     public Display(XSendAdapter adapter) {
         this.adapter = adapter;
+        this.adapter.groesse(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
 
         Board board = this.adapter.getBoard();
         board.addClickListener(new EventHandler());

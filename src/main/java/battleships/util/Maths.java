@@ -12,4 +12,8 @@ public final class Maths {
     public static int getRandomNumberBetween(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
+
+    public static boolean getRandomBoolean() {
+        return (int) (Math.random() * 2) == 0;
+    }
 }
