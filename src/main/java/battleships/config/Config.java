@@ -1,7 +1,6 @@
 package battleships.config;
 
 import jserver.XSend;
-import jserver.XSendDE;
 
 public final class Config {
 
