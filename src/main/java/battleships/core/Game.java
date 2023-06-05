@@ -1,8 +1,7 @@
 package battleships.core;
 
 import battleships.display.Display;
-import battleships.ships.Battleship;
-import battleships.ships.Ship;
+import battleships.ships.*;
 import battleships.util.Position;
 import jserver.XSend;
 import jserver.XSendAdapter;
@@ -18,8 +17,23 @@ public class Game {
     }
 
     public void start() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             this.ship = new Battleship(); // Konstantenzugriff nur über Klassennamen
+            this.setShips();
+        }
+
+        for (int i = 0; i < 2; i++) {
+            this.ship = new Cruiser(); // Konstantenzugriff nur über Klassennamen
+            this.setShips();
+        }
+
+        for (int i = 0; i < 3; i++) {
+            this.ship = new Destroyer(); // Konstantenzugriff nur über Klassennamen
+            this.setShips();
+        }
+
+        for (int i = 0; i < 4; i++) {
+            this.ship = new Submarine(); // Konstantenzugriff nur über Klassennamen
             this.setShips();
         }
     }
