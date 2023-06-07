@@ -11,20 +11,22 @@ import jserver.XSendAdapter;
 public class BoardPainter {
 
     private final XSendAdapter adapter;
+    private final Game game;
 
     public BoardPainter(Game game, XSendAdapter adapter) {
         this.adapter = adapter;
+        this.game = game;
         this.adapter.groesse(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
-        this.initDraw(game);
+        this.initDraw();
     }
 
-    public void draw(Game ignoredGame, BoardClickEvent event) {
+    public void draw(BoardClickEvent event) {
         this.clear();
         this.adapter.farbe2(event.getX(), event.getY(), XSend.DARKRED);
     }
 
-    private void initDraw(Game game) {
-        Ship[] ships = game.getShips();
+    private void initDraw() {
+        Ship[] ships = this.game.getShips();
         for (Ship ship : ships) {
             Position[] positions = ship.getPositions();
             for (Position position : positions) {

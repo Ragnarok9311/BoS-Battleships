@@ -1,5 +1,6 @@
 package battleships.display;
 
+import battleships.config.Config;
 import battleships.core.Game;
 import jserver.*;
 import plotter.Graphic;
@@ -11,15 +12,13 @@ public class Display {
 
     // Instanzvariablen, Objektvariablen (Eigenschaften eines Objekts)
     private final BoardPainter boardPainter;
-    private final Game game;
 
     // Konstruktor
     public Display(Game game, XSendAdapter adapter) {
-        this.game = game;
         this.boardPainter = new BoardPainter(game, adapter);
 
         Board board = adapter.getBoard();
-        board.setSize(1200, 600);
+        board.setSize(Config.PANEL_WIDTH, Config.PANEL_HEIGHT);
         board.addClickListener(new EventHandler());
 
         Graphic graphic = board.getGraphic();
@@ -32,11 +31,11 @@ public class Display {
 
         @Override
         public void boardClick(BoardClickEvent event) {
-            boardPainter.draw(game, event);
+            boardPainter.draw(event);
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent event) {
 
         }
     }
