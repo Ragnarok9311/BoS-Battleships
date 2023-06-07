@@ -2,6 +2,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+/src/test/java/battleships
+
+### BoS ###
 board.properties
 
 ### IntelliJ IDEA ###
