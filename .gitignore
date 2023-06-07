@@ -3,7 +3,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Workspace ###
 /src/test/java/battleships
+/src/main/resources/logs
 
 ### BoS ###
 board.properties
