@@ -14,27 +14,27 @@ public abstract class Ship {
         this.length = length;
         this.isHorizontal = Maths.getRandomBoolean();
         this.positions = new Position[length];
-        this.positions[0] = this.getRandomStartPosition();
         this.setPositions();
     }
-    public void setPositions() {
+
+    private void setPositions() {
+        this.positions[0] = this.getRandomStartPosition();
         int x = positions[0].getX();
         int y = positions[0].getY();
-        if (this.isHorizontal){
-            for (int i = 1; i < this.positions.length; i++){
-                positions[i] = new Position(++x, y);
+
+        for (int i = 1; i < this.positions.length; i++){
+            if (this.isHorizontal){
+                x++;
+            } else {
+                y++;
             }
-        }
-        else {
-            for (int i = 1; i < this.positions.length; i++){
-                positions[i] = new Position(x, ++y);
-            }
+            this.positions[i] = new Position(x, y);
         }
     }
 
     private Position getRandomStartPosition() {
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
 
         if (this.isHorizontal) {
             x = Maths.getRandomNumberBetween(0, this.length);
@@ -44,10 +44,6 @@ public abstract class Ship {
             y = Maths.getRandomNumberBetween(0, this.length);
         }
         return new Position(x, y);
-    }
-
-    public int getLength() {
-        return length;
     }
 
     public Position[] getPositions() {
