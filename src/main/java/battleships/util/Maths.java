@@ -1,6 +1,10 @@
 package battleships.util;
 
+import java.util.Random;
+
 public final class Maths {
+
+    private static final Random RANDOM = new Random();
 
     private Maths() {
         throw new UnsupportedOperationException();
@@ -14,6 +18,6 @@ public final class Maths {
     }
 
     public static boolean getRandomBoolean() {
-        return (int) (Math.random() * 2) == 0;
+        return RANDOM.nextBoolean();
     }
 }
