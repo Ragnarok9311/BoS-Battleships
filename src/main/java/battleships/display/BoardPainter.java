@@ -2,6 +2,7 @@ package battleships.display;
 
 import battleships.config.Config;
 import battleships.core.Game;
+import battleships.logging.Logger;
 import battleships.ships.Ship;
 import battleships.util.Position;
 import jserver.BoardClickEvent;
@@ -11,10 +12,14 @@ import jserver.XSendAdapterEN;
 
 public class BoardPainter {
 
+    private static final String TAG = BoardPainter.class.getSimpleName();
+    private static final Logger LOGGER = Logger.getInstance();
+
     private final XSendAdapterEN adapter;
     private final Game game;
 
     public BoardPainter(Game game, XSendAdapterEN adapter) {
+        LOGGER.log("Initialize BoardPainter", TAG);
         this.adapter = adapter;
         this.game = game;
         this.initBoard();
@@ -60,7 +65,7 @@ public class BoardPainter {
         int linearBoardNumber = event.getX() + event.getY() * 6;
         Symbol symbol = this.adapter.board.getSymbols().get(linearBoardNumber);
         int color = this.getColorFromSymbol(symbol);
-        System.out.println(color);
+        LOGGER.debug("Symbol color from click: " + color, TAG);
     }
 
     private int getColorFromSymbol(Symbol symbol) {

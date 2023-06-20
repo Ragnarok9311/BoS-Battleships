@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Logger {
 
-    private static final Logger LOGGER = new Logger(new LogWriter());
+    private static final Logger INSTANCE = new Logger(new LogWriter());
 
     private final LogWriter logWriter;
 
@@ -12,8 +12,8 @@ public class Logger {
         this.logWriter = logWriter;
     }
 
-    public static Logger getLogger() {
-        return LOGGER;
+    public static Logger getInstance() {
+        return INSTANCE;
     }
 
     public void error(String msg, String classTag) {

@@ -18,7 +18,7 @@ public class Game {
     private Ship[] ships;
 
     public Game() {
-        Logger.getLogger().log("Initialize Game", TAG);
+        Logger.getInstance().log("Initialize Game", TAG);
         this.initBoard();
         this.initShips();
         new Display(this, new XSendAdapterEN());

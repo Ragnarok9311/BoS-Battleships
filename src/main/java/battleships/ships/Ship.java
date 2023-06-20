@@ -2,6 +2,7 @@ package battleships.ships;
 
 import battleships.config.Config;
 import battleships.core.Game;
+import battleships.logging.Logger;
 import battleships.util.Maths;
 import battleships.util.Position;
 
@@ -10,11 +11,15 @@ import java.util.List;
 
 public abstract class Ship {
 
+    private static final String TAG = Ship.class.getSimpleName();
+    private static final Logger LOGGER = Logger.getInstance();
+
     protected final int length;
     protected boolean isHorizontal;
     protected Position[] positions;
 
     public Ship(int length) {
+        LOGGER.log("Initialize new ship", TAG);
         this.length = length;
         this.setHorizontal();
         this.positions = new Position[this.length];
@@ -23,6 +28,7 @@ public abstract class Ship {
 
     private void setHorizontal() {
         this.isHorizontal = Maths.getRandomBoolean();
+        LOGGER.debug("Direction: " + this.isHorizontal, TAG);
     }
 
     private void setPositions() {
