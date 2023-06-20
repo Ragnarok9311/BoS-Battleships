@@ -17,9 +17,7 @@ public class BoardPainter {
     public BoardPainter(Game game, XSendAdapterEN adapter) {
         this.adapter = adapter;
         this.game = game;
-        this.adapter.size(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
-        this.adapter.forms(Config.FORM_SYMBOL);
-        this.adapter.symbolSizes(Config.FORM_SIZE);
+        this.initBoard();
         this.drawShips();
     }
 
@@ -27,7 +25,8 @@ public class BoardPainter {
         this.clear();
         this.drawShips();
         this.printSymbolColor(event);
-        this.adapter.color2(event.getX(), event.getY(), XSend.DARKRED);
+        this.adapter.text2(event.getX(), event.getY(), "X");
+        this.adapter.textColor2(event.getX(), event.getY(), XSend.DARKRED);
     }
 
     private void drawShips() {
@@ -47,6 +46,13 @@ public class BoardPainter {
                 this.adapter.color2(x, y, Config.BOS_DEFAULT_GRAY);
             }
         }
+    }
+
+    private void initBoard() {
+        this.adapter.size(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
+        this.adapter.forms(Config.FORM_SYMBOL);
+        this.adapter.colors(Config.FORM_COLOR);
+        this.adapter.symbolSizes(Config.FORM_SIZE);
     }
 
     // Experimental

@@ -20,4 +20,8 @@ public final class Maths {
     public static boolean getRandomBoolean() {
         return RANDOM.nextBoolean();
     }
+
+    public static int getRandomColorValue() {
+        return (int) (Math.random() * 256 * 256 * 256);
+    }
 }

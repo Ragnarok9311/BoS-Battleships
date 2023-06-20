@@ -10,7 +10,8 @@ public final class Config {
     public static final int BOARD_HEIGHT = 10;     // Default: 10
 
     public static final int BOS_DEFAULT_GRAY = XSend.SILVER;
-    public static final int SHIP_COLOR = XSend.BLUEVIOLET;
+    public static final int FORM_COLOR = XSend.DODGERBLUE;
+    public static final int SHIP_COLOR = XSend.GRAY;
     public static final double FORM_SIZE = 0.4;
     public static final double SHIP_FORM_SIZE = 0.5;
     public static final String FORM_SYMBOL = "s";
