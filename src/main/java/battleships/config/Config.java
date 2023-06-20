@@ -6,7 +6,7 @@ public final class Config {
 
     public static final int PANEL_WIDTH = 1200;
     public static final int PANEL_HEIGHT = 600;
-    public static final int BOARD_WIDTH = 20;
+    public static final int BOARD_WIDTH = 10;
     public static final int BOARD_HEIGHT = 10;
 
     public static final int NUMBER_OF_SHIPS = 5;

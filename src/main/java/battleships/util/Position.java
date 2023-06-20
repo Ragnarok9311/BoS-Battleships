@@ -10,6 +10,11 @@ public class Position {
         this.y = y;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%d | %d", this.x, this.y);
+    }
+
     public int getX() {
         return x;
     }
@@ -17,4 +22,5 @@ public class Position {
     public int getY() {
         return y;
     }
+
 }
