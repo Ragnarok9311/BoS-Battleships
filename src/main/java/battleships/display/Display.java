@@ -14,7 +14,7 @@ public class Display {
     private final BoardPainter boardPainter;
 
     // Konstruktor
-    public Display(Game game, XSendAdapter adapter) {
+    public Display(Game game, XSendAdapterEN adapter) {
         this.boardPainter = new BoardPainter(game, adapter);
 
         Board board = adapter.getBoard();

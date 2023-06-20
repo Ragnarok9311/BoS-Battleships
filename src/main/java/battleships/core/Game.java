@@ -5,7 +5,7 @@ import battleships.display.Display;
 import battleships.logging.Logger;
 import battleships.ships.*;
 import battleships.util.Position;
-import jserver.XSendAdapter;
+import jserver.XSendAdapterEN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,9 @@ public class Game {
 
     public Game() {
         Logger.getLogger().log("Initialize Game", TAG);
-        initBoard();
+        this.initBoard();
         this.initShips();
-        new Display(this, new XSendAdapter());
+        new Display(this, new XSendAdapterEN());
     }
 
     private void initBoard(){

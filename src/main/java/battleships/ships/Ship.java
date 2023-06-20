@@ -14,21 +14,19 @@ public abstract class Ship {
     protected boolean isHorizontal;
     protected Position[] positions;
 
-
-
     public Ship(int length) {
         this.length = length;
         this.setHorizontal();
-        this.positions = new Position[length];
+        this.positions = new Position[this.length];
         this.setPositions();
-
     }
 
     private void setHorizontal() {
         this.isHorizontal = Maths.getRandomBoolean();
     }
-    private void setPositions(){
-        this.setHorizontal();
+
+    private void setPositions() {
+//        this.setHorizontal();
         this.positions[0] = this.getRandomStartPosition();
         int x = this.positions[0].getX();
         int y = this.positions[0].getY();
@@ -41,9 +39,10 @@ public abstract class Ship {
             }
             this.positions[i] = new Position(x, y);
         }
-        this.checkAvailablePositions();
+//        this.checkAvailablePositions();
     }
-    private void checkAvailablePositions(){
+
+    private void checkAvailablePositions() {
         List<Position> boardPositions = Game.BOARD_POSITIONS;
         List<Position> tempList = new ArrayList<>();
 
@@ -60,8 +59,8 @@ public abstract class Ship {
         });
     }
 
-    private boolean isValidPosition(Position position, Position shipPosition) {
-        return shipPosition.getX() == position.getX() && shipPosition.getY() == position.getY();
+    private boolean isValidPosition(Position boardPosition, Position shipPosition) {
+        return shipPosition.getX() == boardPosition.getX() && shipPosition.getY() == boardPosition.getY();
     }
 
     private Position getRandomStartPosition() {
@@ -70,9 +69,9 @@ public abstract class Ship {
 
         if (this.isHorizontal) {
             x = Maths.getRandomNumberBetween(0, this.length);
-            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - 1);
+            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
         } else {
-            x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH - 1);
+            x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH);
             y = Maths.getRandomNumberBetween(0, this.length);
         }
         return new Position(x, y);
