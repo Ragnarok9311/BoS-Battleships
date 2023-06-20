@@ -47,7 +47,7 @@ public abstract class Ship {
         List<Position> tempList = new ArrayList<>();
 
         boardPositions.forEach(position -> {
-            for(Position shipPosition : this.positions) {
+            for (Position shipPosition : this.positions) {
                 if (this.isValidPosition(position, shipPosition)) {
                     tempList.add(position);
                     boardPositions.remove(position);
