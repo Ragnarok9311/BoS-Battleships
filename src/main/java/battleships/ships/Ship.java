@@ -72,27 +72,29 @@ public abstract class Ship {
     }
 
     private Position getRandomStartPosition() {
-        int x;
-        int y;
-
         if (this.isPlayer1) {
-            if (this.isHorizontal) {
-                x = Maths.getRandomNumberBetween(0, this.length);
-                y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
-            } else {
-                x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH / 2);
-                y = Maths.getRandomNumberBetween(0, this.length);
-            }
+            return this.getStartPositionForPlayer1();
         } else {
-            if (this.isHorizontal) {
-                x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length);
-                y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
-            } else {
-                x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH);
-                y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - this.length);
-            }
+            return this.getStartPositionForPlayer2();
         }
-        return new Position(x, y);
+    }
+
+    private Position getStartPositionForPlayer1() {
+        return new Position(
+            this.isHorizontal ? Maths.getRandomNumberBetween(0, this.length) : Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH / 2),
+            this.isHorizontal ? Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT) : Maths.getRandomNumberBetween(0, this.length)
+        );
+    }
+
+    private Position getStartPositionForPlayer2() {
+        return new Position(
+            this.isHorizontal
+                ? Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length)
+                : Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH),
+            this.isHorizontal
+                ? Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT)
+                : Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - this.length)
+        );
     }
 
     public Position[] getPositions() {
