@@ -11,9 +11,6 @@ import java.util.List;
 
 public abstract class Ship {
 
-    private static final String TAG = Ship.class.getSimpleName();
-    private static final Logger LOGGER = Logger.getInstance();
-
     protected final int length;
     protected boolean isHorizontal;
     protected Position[] positions;
