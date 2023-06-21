@@ -2,7 +2,6 @@ package battleships.ships;
 
 import battleships.config.Config;
 import battleships.core.Game;
-import battleships.logging.Logger;
 import battleships.util.Maths;
 import battleships.util.Position;
 
