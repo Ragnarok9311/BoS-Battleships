@@ -21,7 +21,6 @@ public abstract class Ship {
     protected int color;
 
     public Ship(int length, boolean isPlayer1) {
-        LOGGER.log("Initialize new ship", TAG);
         this.isPlayer1 = isPlayer1;
         this.length = length;
         this.positions = new Position[this.length];
@@ -31,12 +30,11 @@ public abstract class Ship {
 
     private void setHorizontal() {
         this.isHorizontal = Maths.getRandomBoolean();
-        LOGGER.debug("Direction: " + this.isHorizontal, TAG);
     }
 
     private void setPositions() {
         this.setHorizontal();
-        this.positions[0] = this.isPlayer1 ? this.getRandomStartPositionP1() : this.getRandomStartPositionP2();
+        this.positions[0] = this.getRandomStartPosition();
         int x = this.positions[0].getX();
         int y = this.positions[0].getY();
 
@@ -77,30 +75,26 @@ public abstract class Ship {
         this.setPositions();
     }
 
-    private Position getRandomStartPositionP1() {
+    private Position getRandomStartPosition() {
         int x;
         int y;
 
-        if (this.isHorizontal) {
-            x = Maths.getRandomNumberBetween(0, this.length);
-            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
+        if (this.isPlayer1) {
+            if (this.isHorizontal) {
+                x = Maths.getRandomNumberBetween(0, this.length);
+                y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
+            } else {
+                x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH / 2);
+                y = Maths.getRandomNumberBetween(0, this.length);
+            }
         } else {
-            x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH / 2);
-            y = Maths.getRandomNumberBetween(0, this.length);
-        }
-        return new Position(x, y);
-    }
-
-    private Position getRandomStartPositionP2() {
-        int x;
-        int y;
-
-        if (this.isHorizontal) {
-            x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length);
-            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
-        } else {
-            x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH);
-            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - this.length);
+            if (this.isHorizontal) {
+                x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length);
+                y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
+            } else {
+                x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH);
+                y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - this.length);
+            }
         }
         return new Position(x, y);
     }

@@ -19,7 +19,7 @@ public class BoardPainter {
     private final Game game;
 
     public BoardPainter(Game game, XSendAdapterEN adapter) {
-        LOGGER.log("Initialize BoardPainter", TAG);
+        LOGGER.log("Initialize board painter", TAG);
         this.adapter = adapter;
         this.game = game;
         this.initBoard();

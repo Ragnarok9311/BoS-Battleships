@@ -2,6 +2,7 @@ package battleships.display;
 
 import battleships.config.Config;
 import battleships.core.Game;
+import battleships.logging.Logger;
 import jserver.*;
 import plotter.Graphic;
 
@@ -10,11 +11,16 @@ import java.awt.event.ActionListener;
 
 public class Display {
 
+    // Statische Variablen, Konstanten oder Klassenvariablen
+    private static final Logger LOGGER = Logger.getInstance();
+    private static final String TAG = Display.class.getSimpleName();
+
     // Instanzvariablen, Objektvariablen (Eigenschaften eines Objekts)
     private final BoardPainter boardPainter;
 
     // Konstruktor
     public Display(Game game, XSendAdapterEN adapter) {
+        LOGGER.log("Initialize display", TAG);
         this.boardPainter = new BoardPainter(game, adapter);
 
         Board board = adapter.getBoard();

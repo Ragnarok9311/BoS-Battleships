@@ -13,18 +13,21 @@ import java.util.List;
 public class Game {
 
     public static final List<Position> BOARD_POSITIONS = new ArrayList<>();
+
+    private static final Logger LOGGER = Logger.getInstance();
     private static final String TAG = Game.class.getSimpleName();
 
     private Ship[] playerShips;
 
     public Game() {
-        Logger.getInstance().log("Initialize Game", TAG);
+        LOGGER.log("Initialize game", TAG);
         this.initBoard();
         this.initShips();
         new Display(this, new XSendAdapterEN());
     }
 
     private void initBoard(){
+        LOGGER.log("Initialize board positions list", TAG);
         for (int x = 0; x < Config.BOARD_WIDTH; x++){
             for (int y = 0; y < Config.BOARD_HEIGHT; y++){
                 BOARD_POSITIONS.add(new Position(x, y));
@@ -33,6 +36,7 @@ public class Game {
     }
 
     private void initShips() {
+        LOGGER.log("Initialize ships", TAG);
         this.playerShips = new Ship[] {
             new Battleship(true),
             new Cruiser(true),
