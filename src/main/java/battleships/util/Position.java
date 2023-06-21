@@ -10,6 +10,10 @@ public class Position {
         this.y = y;
     }
 
+    public boolean equals(Position other) {
+        return this.x == other.x && this.y == other.y;
+    }
+
     @Override
     public String toString() {
         return String.format("%d | %d", this.x, this.y);

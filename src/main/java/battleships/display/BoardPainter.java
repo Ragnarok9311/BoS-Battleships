@@ -28,6 +28,7 @@ public class BoardPainter {
 
     public void draw(BoardClickEvent event) {
         this.clear();
+        this.adapter.colors(Config.FORM_COLOR);
         this.drawShips();
         this.printSymbolColor(event);
         this.adapter.text2(event.getX(), event.getY(), "X");
@@ -35,12 +36,12 @@ public class BoardPainter {
     }
 
     private void drawShips() {
-        Ship[] ships = this.game.getShips();
+        Ship[] ships = this.game.getPlayerShips();
         for (Ship ship : ships) {
             Position[] positions = ship.getPositions();
             for (Position position : positions) {
                 this.adapter.symbolSize2(position.getX(), position.getY(), Config.SHIP_FORM_SIZE);
-                this.adapter.color2(position.getX(), position.getY(), Config.SHIP_COLOR);
+                this.adapter.color2(position.getX(), position.getY(), ship.getColor());
             }
         }
     }

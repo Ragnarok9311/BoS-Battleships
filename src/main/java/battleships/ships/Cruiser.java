@@ -2,7 +2,7 @@ package battleships.ships;
 
 public class Cruiser extends Ship {
 
-    public Cruiser() {
-        super(4);
+    public Cruiser(boolean isPlayer1) {
+        super(4, isPlayer1);
     }
 }

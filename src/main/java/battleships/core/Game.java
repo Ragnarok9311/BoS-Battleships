@@ -15,7 +15,7 @@ public class Game {
     public static final List<Position> BOARD_POSITIONS = new ArrayList<>();
     private static final String TAG = Game.class.getSimpleName();
 
-    private Ship[] ships;
+    private Ship[] playerShips;
 
     public Game() {
         Logger.getInstance().log("Initialize Game", TAG);
@@ -33,22 +33,32 @@ public class Game {
     }
 
     private void initShips() {
-        this.ships = new Ship[] {
-            new Battleship(),
-            new Cruiser(),
-            new Cruiser(),
-            new Destroyer(),
-            new Destroyer(),
-            new Destroyer(),
-            new Submarine(),
-            new Submarine(),
-            new Submarine(),
-            new Submarine()
+        this.playerShips = new Ship[] {
+            new Battleship(true),
+            new Cruiser(true),
+            new Cruiser(true),
+            new Destroyer(true),
+            new Destroyer(true),
+            new Destroyer(true),
+            new Submarine(true),
+            new Submarine(true),
+            new Submarine(true),
+            new Submarine(true),
+
+            new Battleship(false),
+            new Cruiser(false),
+            new Cruiser(false),
+            new Destroyer(false),
+            new Destroyer(false),
+            new Destroyer(false),
+            new Submarine(false),
+            new Submarine(false),
+            new Submarine(false),
+            new Submarine(false)
         };
     }
 
-    public Ship[] getShips() {
-        return ships;
-
+    public Ship[] getPlayerShips() {
+        return playerShips;
     }
 }

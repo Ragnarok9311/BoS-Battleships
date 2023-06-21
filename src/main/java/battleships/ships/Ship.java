@@ -17,13 +17,16 @@ public abstract class Ship {
     protected final int length;
     protected boolean isHorizontal;
     protected Position[] positions;
+    protected boolean isPlayer1;
+    protected int color;
 
-    public Ship(int length) {
+    public Ship(int length, boolean isPlayer1) {
         LOGGER.log("Initialize new ship", TAG);
+        this.isPlayer1 = isPlayer1;
         this.length = length;
-        this.setHorizontal();
         this.positions = new Position[this.length];
         this.setPositions();
+        this.color = this.isPlayer1 ? Config.SHIP_COLOR_P1 : Config.SHIP_COLOR_P2;
     }
 
     private void setHorizontal() {
@@ -32,8 +35,8 @@ public abstract class Ship {
     }
 
     private void setPositions() {
-//        this.setHorizontal();
-        this.positions[0] = this.getRandomStartPosition();
+        this.setHorizontal();
+        this.positions[0] = this.isPlayer1 ? this.getRandomStartPositionP1() : this.getRandomStartPositionP2();
         int x = this.positions[0].getX();
         int y = this.positions[0].getY();
 
@@ -45,31 +48,36 @@ public abstract class Ship {
             }
             this.positions[i] = new Position(x, y);
         }
-//        this.checkAvailablePositions();
+        this.checkAvailablePositions();
     }
 
     private void checkAvailablePositions() {
         List<Position> boardPositions = Game.BOARD_POSITIONS;
         List<Position> tempList = new ArrayList<>();
 
-        boardPositions.forEach(position -> {
-            for (Position shipPosition : this.positions) {
-                if (this.isValidPosition(position, shipPosition)) {
-                    tempList.add(position);
-                    boardPositions.remove(position);
-                } else {
-                    boardPositions.addAll(tempList);
-                    this.setPositions();
+        boolean areAllPositionsValid = true;
+        for (Position shipPosition : this.positions) {
+            boolean isPositionValid = false;
+            for (Position boardPosition : boardPositions) {
+                if (shipPosition.equals(boardPosition)) {
+                    tempList.add(boardPosition);
+                    boardPositions.remove(boardPosition);
+                    isPositionValid = true;
+                    break;
                 }
             }
-        });
+            if (!isPositionValid) {
+                areAllPositionsValid = false;
+                break;
+            }
+        }
+
+        if (areAllPositionsValid) return;
+        boardPositions.addAll(tempList);
+        this.setPositions();
     }
 
-    private boolean isValidPosition(Position boardPosition, Position shipPosition) {
-        return shipPosition.getX() == boardPosition.getX() && shipPosition.getY() == boardPosition.getY();
-    }
-
-    private Position getRandomStartPosition() {
+    private Position getRandomStartPositionP1() {
         int x;
         int y;
 
@@ -77,13 +85,31 @@ public abstract class Ship {
             x = Maths.getRandomNumberBetween(0, this.length);
             y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
         } else {
-            x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH);
+            x = Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH / 2);
             y = Maths.getRandomNumberBetween(0, this.length);
+        }
+        return new Position(x, y);
+    }
+
+    private Position getRandomStartPositionP2() {
+        int x;
+        int y;
+
+        if (this.isHorizontal) {
+            x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length);
+            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT);
+        } else {
+            x = Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH);
+            y = Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - this.length);
         }
         return new Position(x, y);
     }
 
     public Position[] getPositions() {
         return positions;
+    }
+
+    public int getColor() {
+        return color;
     }
 }
