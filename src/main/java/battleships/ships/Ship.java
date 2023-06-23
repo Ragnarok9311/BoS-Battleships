@@ -60,6 +60,7 @@ public abstract class Ship {
                     break;
                 }
             }
+
             if (!isPositionValid) {
                 areAllPositionsValid = false;
                 break;
@@ -72,29 +73,19 @@ public abstract class Ship {
     }
 
     private Position getRandomStartPosition() {
-        if (this.isPlayer1) {
-            return this.getStartPositionForPlayer1();
-        } else {
-            return this.getStartPositionForPlayer2();
-        }
+        return this.isPlayer1 ? this.getStartPositionForPlayer1() : this.getStartPositionForPlayer2();
     }
 
     private Position getStartPositionForPlayer1() {
-        return new Position(
-            this.isHorizontal ? Maths.getRandomNumberBetween(0, this.length) : Maths.getRandomNumberBetween(0, Config.BOARD_WIDTH / 2),
-            this.isHorizontal ? Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT) : Maths.getRandomNumberBetween(0, this.length)
-        );
+        return this.isHorizontal
+            ? Position.getRandomPosition(0, this.length, 0, Config.BOARD_HEIGHT)
+            : Position.getRandomPosition(0, Config.BOARD_WIDTH / 2, 0, this.length);
     }
 
     private Position getStartPositionForPlayer2() {
-        return new Position(
-            this.isHorizontal
-                ? Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length)
-                : Maths.getRandomNumberBetween(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH),
-            this.isHorizontal
-                ? Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT)
-                : Maths.getRandomNumberBetween(0, Config.BOARD_HEIGHT - this.length)
-        );
+        return this.isHorizontal
+            ? Position.getRandomPosition(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length, 0, Config.BOARD_HEIGHT)
+            : Position.getRandomPosition(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH, 0, Config.BOARD_HEIGHT - this.length);
     }
 
     public Position[] getPositions() {

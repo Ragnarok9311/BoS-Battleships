@@ -10,6 +10,13 @@ public class Position {
         this.y = y;
     }
 
+    public static Position getRandomPosition(int minX, int maxX, int minY, int maxY) {
+        return new Position(
+            Maths.getRandomNumberBetween(minX, maxX),
+            Maths.getRandomNumberBetween(minY, maxY)
+        );
+    }
+
     public boolean equals(Position other) {
         return this.x == other.x && this.y == other.y;
     }
