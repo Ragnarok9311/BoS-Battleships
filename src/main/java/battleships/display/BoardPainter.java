@@ -3,7 +3,7 @@ package battleships.display;
 import battleships.config.Config;
 import battleships.core.Game;
 import battleships.logging.Logger;
-import battleships.ships.Ship;
+import battleships.player.ships.Ship;
 import battleships.util.Position;
 import jserver.BoardClickEvent;
 import jserver.Symbol;

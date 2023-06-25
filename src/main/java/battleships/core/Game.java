@@ -3,8 +3,9 @@ package battleships.core;
 import battleships.config.Config;
 import battleships.display.Display;
 import battleships.logging.Logger;
-import battleships.ships.*;
+import battleships.player.ships.*;
 import battleships.util.Position;
+import jserver.BoardClickEvent;
 import jserver.XSendAdapterEN;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ public class Game {
     private static final String TAG = Game.class.getSimpleName();
 
     private Ship[] playerShips;
+    private boolean isPlayer1sTurn;
 
     public Game() {
         LOGGER.log("Initialize game", TAG);
+        isPlayer1sTurn = true;
         this.initBoard();
         this.initShips();
         new Display(this, new XSendAdapterEN());
@@ -62,6 +65,23 @@ public class Game {
         };
     }
 
+    public void update(BoardClickEvent event) {
+        if (this.isPlayer1sTurn) {
+            if (event.getX() >= 10) {
+                this.isHit(new Position(event.getX(), event.getY()));
+            }
+        }
+    }
+
+    public void isHit(Position clickPosition) {
+        for (Ship ship : playerShips) {
+            for (Position shipPosition : ship.getPositions()) {
+                if (clickPosition.equals(shipPosition)) {
+                    System.out.println("Ship is hit");
+                }
+            }
+        }
+    }
     public Ship[] getPlayerShips() {
         return playerShips;
     }

@@ -1,4 +1,4 @@
-package battleships.ships;
+package battleships.player.ships;
 
 import battleships.config.Config;
 import battleships.core.Game;

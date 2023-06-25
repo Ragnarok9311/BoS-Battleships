@@ -17,10 +17,12 @@ public class Display {
 
     // Instanzvariablen, Objektvariablen (Eigenschaften eines Objekts)
     private final BoardPainter boardPainter;
+    private final Game game;
 
     // Konstruktor
     public Display(Game game, XSendAdapterEN adapter) {
         LOGGER.log("Initialize display", TAG);
+        this.game = game;
         this.boardPainter = new BoardPainter(game, adapter);
 
         Board board = adapter.getBoard();
@@ -37,6 +39,7 @@ public class Display {
 
         @Override
         public void boardClick(BoardClickEvent event) {
+            game.update(event);
             boardPainter.draw(event);
         }
 

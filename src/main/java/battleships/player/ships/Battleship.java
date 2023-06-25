@@ -1,4 +1,4 @@
-package battleships.ships;
+package battleships.player.ships;
 
 public class Battleship extends Ship {
 
