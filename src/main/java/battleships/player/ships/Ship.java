@@ -49,7 +49,7 @@ public abstract class Ship {
         List<Position> boardPositions = Game.BOARD_POSITIONS;
         List<Position> tempList = new ArrayList<>();
 
-        boolean areAllPositionsValid = true;
+        boolean hasShipValidPositions = true;
         for (Position shipPosition : this.positions) {
             boolean isPositionValid = false;
             for (Position boardPosition : boardPositions) {
@@ -62,12 +62,12 @@ public abstract class Ship {
             }
 
             if (!isPositionValid) {
-                areAllPositionsValid = false;
+                hasShipValidPositions = false;
                 break;
             }
         }
 
-        if (areAllPositionsValid) return;
+        if (hasShipValidPositions) return;
         boardPositions.addAll(tempList);
         this.setPositions();
     }
