@@ -1,56 +1,66 @@
 package battleships.player;
 
-import battleships.config.Config;
+import battleships.core.Game;
+import battleships.logging.Logger;
 import battleships.player.ships.*;
 import battleships.util.Adjust;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Adjust
 public class Player {
 
+    private static final Logger LOGGER = Logger.getInstance();
+    private static final String TAG = Game.class.getSimpleName();
+
     private final String name;
-    private final Ship[] ships;
+    private final List<Ship> ships;
     private final boolean isPlayer;
-    private final int color;
 
     public Player(String name) {
-        this(name, false, Config.SHIP_COLOR_P1);
+        this(name, false);
     }
 
     public Player() {
-        this("AI", true, Config.SHIP_COLOR_P2);
+        this("AI", true);
     }
 
-    private Player(String name, boolean isPlayer, int color) {
+    private Player(String name, boolean isPlayer) {
         this.name = name;
         this.isPlayer = isPlayer;
-        this.color = color;
         this.ships = this.createShips();
     }
 
-    private Ship[] createShips() {
-        return new Ship[] {
-            new Battleship(this.isPlayer),
-            new Cruiser(this.isPlayer),
-            new Cruiser(this.isPlayer),
-            new Destroyer(this.isPlayer),
-            new Destroyer(this.isPlayer),
-            new Destroyer(this.isPlayer),
-            new Submarine(this.isPlayer),
-            new Submarine(this.isPlayer),
-            new Submarine(this.isPlayer),
-            new Submarine(this.isPlayer),
-        };
+    private List<Ship> createShips() {
+        LOGGER.log("Initialize ships", TAG);
+        List<Ship> ships = new ArrayList<>();
+        ships.add(new Battleship(this.isPlayer));
+        ships.add(new Cruiser(this.isPlayer));
+        ships.add(new Cruiser(this.isPlayer));
+        ships.add(new Destroyer(this.isPlayer));
+        ships.add(new Destroyer(this.isPlayer));
+        ships.add(new Destroyer(this.isPlayer));
+        ships.add(new Submarine(this.isPlayer));
+        ships.add(new Submarine(this.isPlayer));
+        ships.add(new Submarine(this.isPlayer));
+        ships.add(new Submarine(this.isPlayer));
+        return ships;
+    }
+
+    public void removeShip(Ship ship) {
+        this.ships.remove(ship);
+    }
+
+    public boolean hasLost() {
+        return this.ships.isEmpty();
     }
 
     public String getName() {
         return name;
     }
 
-    public Ship[] getShips() {
+    public List<Ship> getShips() {
         return ships;
-    }
-
-    public int getColor() {
-        return color;
     }
 }

@@ -1,7 +1,7 @@
 package battleships.player.ships;
 
 import battleships.config.Config;
-import battleships.core.Game;
+import battleships.core.BattleshipsBoard;
 import battleships.util.Maths;
 import battleships.util.Position;
 
@@ -10,43 +10,42 @@ import java.util.List;
 
 public abstract class Ship {
 
-    protected final int length;
+    protected int length;
+    protected boolean isPlayer;
     protected boolean isHorizontal;
-    protected Position[] positions;
-    protected boolean isPlayer1;
-    protected int color;
+    protected int colorValue;
+    protected List<Position> positions;
+    protected List<Position> destroyedPostions;
 
-    public Ship(int length, boolean isPlayer1) {
-        this.isPlayer1 = isPlayer1;
+    public Ship(int length, boolean isPlayer) {
         this.length = length;
-        this.positions = new Position[this.length];
-        this.setPositions();
-        this.color = this.isPlayer1 ? Config.SHIP_COLOR_P1 : Config.SHIP_COLOR_P2;
+        this.isPlayer = isPlayer;
+        this.colorValue = this.isPlayer ? Config.SHIP_COLOR_P1 : Config.SHIP_COLOR_P2;
+//        this.colorValue = Maths.getRandomColorValue();
+        this.positions = new ArrayList<>(length);
+        this.destroyedPostions = new ArrayList<>(length);
+        this.addPositions();
     }
 
-    private void setHorizontal() {
+    private void addPositions() {
         this.isHorizontal = Maths.getRandomBoolean();
-    }
+        this.positions.add(this.getRandomStartPosition());
+        int x = this.positions.get(0).getX();
+        int y = this.positions.get(0).getY();
 
-    private void setPositions() {
-        this.setHorizontal();
-        this.positions[0] = this.getRandomStartPosition();
-        int x = this.positions[0].getX();
-        int y = this.positions[0].getY();
-
-        for (int i = 0; i < this.length; i++) {
+        for (int i = 1; i < this.length; i++) {
             if (this.isHorizontal) {
                 x++;
             } else {
                 y++;
             }
-            this.positions[i] = new Position(x, y);
+            this.positions.add(new Position(x, y));
         }
         this.checkAvailablePositions();
     }
 
     private void checkAvailablePositions() {
-        List<Position> boardPositions = Game.BOARD_POSITIONS;
+        List<Position> boardPositions = BattleshipsBoard.BOARD;
         List<Position> tempList = new ArrayList<>();
 
         boolean hasShipValidPositions = true;
@@ -69,30 +68,44 @@ public abstract class Ship {
 
         if (hasShipValidPositions) return;
         boardPositions.addAll(tempList);
-        this.setPositions();
+        this.positions.clear();
+        this.addPositions();
     }
 
     private Position getRandomStartPosition() {
-        return this.isPlayer1 ? this.getStartPositionForPlayer1() : this.getStartPositionForPlayer2();
+        return this.isPlayer ? this.getStartPositionForPlayerShip() : this.getStartPositionForAIShip();
     }
 
-    private Position getStartPositionForPlayer1() {
+    private Position getStartPositionForPlayerShip() {
         return this.isHorizontal
-            ? Position.getRandomPosition(0, this.length, 0, Config.BOARD_HEIGHT)
-            : Position.getRandomPosition(0, Config.BOARD_WIDTH / 2, 0, this.length);
+                ? Position.getRandomPosition(0, this.length + 1, 0, Config.BOARD_HEIGHT)
+                : Position.getRandomPosition(0, Config.BOARD_WIDTH, 0, this.length + 1);
     }
 
-    private Position getStartPositionForPlayer2() {
+    private Position getStartPositionForAIShip() {
         return this.isHorizontal
-            ? Position.getRandomPosition(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH - this.length, 0, Config.BOARD_HEIGHT)
-            : Position.getRandomPosition(Config.BOARD_WIDTH / 2, Config.BOARD_WIDTH, 0, Config.BOARD_HEIGHT - this.length);
+                ? Position.getRandomPosition(Config.BOARD_WIDTH + 1, Config.BOARD_WIDTH * 2 - this.length + 2, 0, Config.BOARD_HEIGHT)
+                : Position.getRandomPosition(Config.BOARD_WIDTH + 1, Config.BOARD_WIDTH * 2 - this.length + 2, 0, Config.BOARD_HEIGHT - this.length);
     }
 
-    public Position[] getPositions() {
+    public void removePosition(Position position) {
+        this.positions.remove(position);
+        this.destroyedPostions.add(position);
+    }
+
+    public boolean isDestroyed() {
+        return this.positions.isEmpty();
+    }
+
+    public List<Position> getPositions() {
         return positions;
     }
 
-    public int getColor() {
-        return color;
+    public List<Position> getDestroyedPostions() {
+        return destroyedPostions;
+    }
+
+    public int getColorValue() {
+        return colorValue;
     }
 }

@@ -12,8 +12,8 @@ public class Position {
 
     public static Position getRandomPosition(int minX, int maxX, int minY, int maxY) {
         return new Position(
-            Maths.getRandomNumberBetween(minX, maxX),
-            Maths.getRandomNumberBetween(minY, maxY)
+                Maths.getRandomNumberBetween(minX, maxX),
+                Maths.getRandomNumberBetween(minY, maxY)
         );
     }
 

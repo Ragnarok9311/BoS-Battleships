@@ -1,88 +1,96 @@
 package battleships.core;
 
-import battleships.config.Config;
 import battleships.display.Display;
 import battleships.logging.Logger;
-import battleships.player.ships.*;
+import battleships.player.Player;
+import battleships.player.ships.Ship;
 import battleships.util.Position;
-import jserver.BoardClickEvent;
 import jserver.XSendAdapterEN;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.*;
 
 public class Game {
-
-    public static final List<Position> BOARD_POSITIONS = new ArrayList<>();
 
     private static final Logger LOGGER = Logger.getInstance();
     private static final String TAG = Game.class.getSimpleName();
 
-    private Ship[] playerShips;
-    private boolean isPlayer1sTurn;
+    private final Player player;
+    private final Player AI;
+    private Position hitPositionByAi;
+    private boolean isRunning;
+    private boolean isPlayerTurn;
 
-    public Game() {
+    public Game(BattleshipsBoard battleshipsBoard) {
         LOGGER.log("Initialize game", TAG);
-        isPlayer1sTurn = true;
-        this.initBoard();
-        this.initShips();
+        this.isRunning = true;
+        this.isPlayerTurn = true;
+        this.player = new Player("Player");
+        this.AI = new Player();
         new Display(this, new XSendAdapterEN());
     }
 
-    private void initBoard(){
-        LOGGER.log("Initialize board positions list", TAG);
-        for (int x = 0; x < Config.BOARD_WIDTH; x++){
-            for (int y = 0; y < Config.BOARD_HEIGHT; y++){
-                BOARD_POSITIONS.add(new Position(x, y));
-            }
-        }
+    public void update(Position clickedPosition) {
+        if (this.isPlayerTurn) this.checkShipIsHit(clickedPosition, this.AI);
+        if (!this.isPlayerTurn) this.executeAiTurn();
+        this.checkGameOver();
     }
 
-    private void initShips() {
-        LOGGER.log("Initialize ships", TAG);
-        this.playerShips = new Ship[] {
-            new Battleship(true),
-            new Cruiser(true),
-            new Cruiser(true),
-            new Destroyer(true),
-            new Destroyer(true),
-            new Destroyer(true),
-            new Submarine(true),
-            new Submarine(true),
-            new Submarine(true),
-            new Submarine(true),
-
-            new Battleship(false),
-            new Cruiser(false),
-            new Cruiser(false),
-            new Destroyer(false),
-            new Destroyer(false),
-            new Destroyer(false),
-            new Submarine(false),
-            new Submarine(false),
-            new Submarine(false),
-            new Submarine(false)
-        };
-    }
-
-    public void update(BoardClickEvent event) {
-        if (this.isPlayer1sTurn) {
-            if (event.getX() >= 10) {
-                this.isHit(new Position(event.getX(), event.getY()));
-            }
-        }
-    }
-
-    public void isHit(Position clickPosition) {
-        for (Ship ship : playerShips) {
+    private void checkShipIsHit(Position clickedPosition, Player player) {
+        Ship selectedShip = null;
+        Position selectedPosition = null;
+        label:
+        for (Ship ship : player.getShips()) {
             for (Position shipPosition : ship.getPositions()) {
-                if (clickPosition.equals(shipPosition)) {
-                    System.out.println("Ship is hit");
+                if (clickedPosition.equals(shipPosition)) {
+                    selectedShip = ship;
+                    selectedPosition = shipPosition;
+                    System.out.println(player.getName() + " ship hit!");
+                    break label;
                 }
             }
         }
+
+        if (selectedShip != null) {
+            selectedShip.removePosition(selectedPosition);
+            if (selectedShip.isDestroyed()) {
+                player.removeShip(selectedShip);
+            }
+            return;
+        }
+        this.isPlayerTurn = false;
     }
-    public Ship[] getPlayerShips() {
-        return playerShips;
+
+    private void executeAiTurn() {
+        int index = (int) (Math.random() * BattleshipsBoard.AI_BOARD.size());
+        this.hitPositionByAi = BattleshipsBoard.AI_BOARD.get(index);
+        BattleshipsBoard.AI_BOARD.remove(this.hitPositionByAi);
+        this.checkShipIsHit(this.hitPositionByAi, this.player);
+        this.isPlayerTurn = true;
+    }
+
+    private void checkGameOver() {
+        if (this.player.hasLost()) {
+            JOptionPane.showMessageDialog(null, "AI wins", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+            this.isRunning = false;
+        } else if (this.AI.hasLost()) {
+            JOptionPane.showMessageDialog(null, "Player wins", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+            this.isRunning = false;
+        }
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Player getAI() {
+        return AI;
+    }
+
+    public Position getHitPositionByAi() {
+        return hitPositionByAi;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 }
