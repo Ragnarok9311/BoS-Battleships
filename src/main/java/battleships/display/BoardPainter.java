@@ -83,12 +83,12 @@ public class BoardPainter {
 
     private void drawHits(Position clickedPosition) {
         this.adapter.text2(clickedPosition.getX(), clickedPosition.getY(), "X");
-        this.adapter.textColor2(clickedPosition.getX(), clickedPosition.getY(), XSend.WHITE);
+        this.adapter.textColor2(clickedPosition.getX(), clickedPosition.getY(), XSend.DARKRED);
 
         Position hitPositionByAi = this.game.getHitPositionByAi();
         if (hitPositionByAi != null) {
             this.adapter.text2(hitPositionByAi.getX(), hitPositionByAi.getY(), "X");
-            this.adapter.textColor2(hitPositionByAi.getX(), hitPositionByAi.getY(), XSend.WHITE);
+            this.adapter.textColor2(hitPositionByAi.getX(), hitPositionByAi.getY(), XSend.DARKRED);
         }
     }
 

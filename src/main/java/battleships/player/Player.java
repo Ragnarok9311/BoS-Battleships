@@ -18,7 +18,7 @@ public class Player {
     private final List<Ship> ships;
     private final boolean isPlayer;
 
-    private Player(String name, boolean isPlayer) {
+    public Player(String name, boolean isPlayer) {
         this.name = name;
         this.isPlayer = isPlayer;
         this.ships = this.createShips();
