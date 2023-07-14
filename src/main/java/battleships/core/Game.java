@@ -14,11 +14,11 @@ public class Game {
     private static final Logger LOGGER = Logger.getInstance();
     private static final String TAG = Game.class.getSimpleName();
 
+    private boolean isRunning;
+    private boolean isPlayerTurn;
     private final Player player;
     private final Player AI;
     private Position hitPositionByAi;
-    private boolean isRunning;
-    private boolean isPlayerTurn;
 
     public Game(BattleshipsBoard battleshipsBoard) {
         LOGGER.log("Initialize game", TAG);
@@ -61,9 +61,9 @@ public class Game {
     }
 
     private void executeAiTurn() {
-        int index = (int) (Math.random() * BattleshipsBoard.AI_BOARD.size());
-        this.hitPositionByAi = BattleshipsBoard.AI_BOARD.get(index);
-        BattleshipsBoard.AI_BOARD.remove(this.hitPositionByAi);
+        int index = (int) (Math.random() * BattleshipsBoard.PLAYER_BOARD.size());
+        this.hitPositionByAi = BattleshipsBoard.PLAYER_BOARD.get(index);
+        BattleshipsBoard.PLAYER_BOARD.remove(this.hitPositionByAi);
         this.checkShipIsHit(this.hitPositionByAi, this.player);
         this.isPlayerTurn = true;
     }

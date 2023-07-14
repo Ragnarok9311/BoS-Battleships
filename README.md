@@ -6,3 +6,6 @@
 ![](https://img.shields.io/github/repo-size/Ragnarok9311/BoS-Battleships)
 
 </div>
+
+Player board: left\
+AI board: right

@@ -18,18 +18,18 @@ public class Player {
     private final List<Ship> ships;
     private final boolean isPlayer;
 
-    public Player(String name) {
-        this(name, false);
-    }
-
-    public Player() {
-        this("AI", true);
-    }
-
     private Player(String name, boolean isPlayer) {
         this.name = name;
         this.isPlayer = isPlayer;
         this.ships = this.createShips();
+    }
+
+    public Player(String name) {
+        this(name, true);
+    }
+
+    public Player() {
+        this("AI", false);
     }
 
     private List<Ship> createShips() {

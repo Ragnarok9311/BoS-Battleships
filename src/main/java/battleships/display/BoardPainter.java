@@ -83,12 +83,12 @@ public class BoardPainter {
 
     private void drawHits(Position clickedPosition) {
         this.adapter.text2(clickedPosition.getX(), clickedPosition.getY(), "X");
-        this.adapter.textColor2(clickedPosition.getX(), clickedPosition.getY(), XSend.DARKRED);
+        this.adapter.textColor2(clickedPosition.getX(), clickedPosition.getY(), XSend.WHITE);
 
         Position hitPositionByAi = this.game.getHitPositionByAi();
         if (hitPositionByAi != null) {
             this.adapter.text2(hitPositionByAi.getX(), hitPositionByAi.getY(), "X");
-            this.adapter.textColor2(hitPositionByAi.getX(), hitPositionByAi.getY(), XSend.DARKRED);
+            this.adapter.textColor2(hitPositionByAi.getX(), hitPositionByAi.getY(), XSend.WHITE);
         }
     }
 
@@ -100,6 +100,7 @@ public class BoardPainter {
             else if (ship instanceof Destroyer) shipCounter[2]++;
             else if (ship instanceof Submarine) shipCounter[3]++;
         }
-        this.adapter.statusText(String.format("Battleships: %d | Cruisers: %d | Destroyers: %d | Submarines: %d", shipCounter[0], shipCounter[1], shipCounter[2], shipCounter[3]));
+        this.adapter.statusText(String.format("Battleships: %d | Cruisers: %d | Destroyers: %d | Submarines: %d",
+                shipCounter[0], shipCounter[1], shipCounter[2], shipCounter[3]));
     }
 }
